@@ -60,7 +60,7 @@ int main () {
     mensagem[strcspn(mensagem, "\n")] = '\0';
 
     // logica djikstra da origem para o destino escolhido
-    float d[N+1];
+    float d[N+1]; 
     int visitado[N+1];
     int anterior[N+1];
 
@@ -69,25 +69,26 @@ int main () {
         visitado[i] = 0;
         anterior[i] = -1;
     }
-    d[origem] = 0.0f;
+    d[origem] = 0.0f; //distancia na posicao origem = 3
 
     for (int k = 1; k <= N; k++) {
-        int u = -1;
-        float melhor = INF;
+        int u = -1; //vert. com menor dist a ser processado
+        float melhor = INF; //menor distancia
 
         for (int i = 1; i <= N; i++) {
             if (!visitado[i] && d[i] < melhor) {
-                melhor = d[i];
-                u = i;
+                melhor = d[i]; // atualiza a menor distancia
+                u = i; // guarda o vertice de menor distancia desde a origem
             }
         }
 
-        if (u == -1) break; 
-        if (u == destino) break;
-        visitado[u] = 1;
+        if (u == -1) break; // nenhum vertice alcancavel
+        if (u == destino) break; // chegou ao final
+        visitado[u] = 1; // no ja visitado
 
+        //relaxa as arestas e continua
         for (int v = 1; v <= N; v++) {
-            if (!visitado[v] && grafo[u][v] < INF) {
+            if (!visitado[v] && grafo[u][v] < INF) { //se v ainda nao foi visitado
                 float nd = d[u] + grafo[u][v];
                 if (nd < d[v]) {
                     d[v] = nd;
@@ -114,7 +115,7 @@ int main () {
 
     printf("\n>> Enviando mensagem pela menor rota: ");
     for (int i = tam - 1; i >= 0; i--) {
-        printf("%d", rota[i]);
+        printf("%d -", rota[i]);
         if (i > 0) printf(" ");
     }
     printf("\n");
